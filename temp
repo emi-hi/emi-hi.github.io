@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Leaflet Routing Machine Example</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="leaflet-routing-machine.css" />
+    
+    
+    <style>
+        .map {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map" class="map"></div>
+    
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="leaflet-routing-machine.js"></script>
+    <script src="../scripts/AnimatedMarker.js"> </script>
+    <script>
+    var map = L.map('map');
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    var tedIcon = L.icon({
+        iconUrl: 'ted_transparent.png',
+        iconSize: [90, 90], // size of the icon
+        popupAnchor: [0,-15]
+        });
+
+    L.Routing.control({
+        waypoints: [
+            L.latLng(48.45488, -123.35767),
+            L.latLng(48.432200, -123.365000)
+        ],
+        routeWhileDragging: true
+    }).addTo(map);
+
+        
+    console.log(L.Routing.Plan_latlngs) 
+
+    var teddyRoute = [[48.440200, -123.360000],[48.435334, -123.358017],[48.432323, -123.358454],[48.432619, -123.361917],[48.432107, -123.361657],[48.432200, -123.365000]]
+      
+    line = L.polyline(teddyRoute),
+        animatedMarker = L.animatedMarker(line.getLatLngs(),{
+            icon: tedIcon
+        });
+    map.addLayer(animatedMarker)
+    console.log(line)
+    </script>
+</body>
+</html>
